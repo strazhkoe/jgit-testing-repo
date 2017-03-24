@@ -1,13 +1,21 @@
 package com.ystrazhko.git.jgit;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
+import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.TransportException;
+import org.eclipse.jgit.api.errors.UnmergedPathsException;
+import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Repository;
 
 import com.google.gson.reflect.TypeToken;
 import com.ystrazhko.git.entities.Group;
@@ -96,4 +104,57 @@ public class JGit {
                      .getService(ProjectService.class.getName())).getProjects(String.valueOf(group.getId()));
         return JSONParser.parseToCollectionObjects(jsonProjects,new TypeToken<List<Project>>() {}.getType());
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void commit(String groupFolderPath, String message) {
+        try {
+            Repository rep = new FileRepository(groupFolderPath + "/.git");
+            Git git = new Git(rep);
+            git.commit().setAll(true).setMessage(message).call();
+            git.push().call();
+
+
+
+
+
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoHeadException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoMessageException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (UnmergedPathsException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ConcurrentRefUpdateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (WrongRepositoryStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (GitAPIException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    public void commitAndPush() {
+
+    }
+
+
+
+
+//    create new file
+//    File myfile = new File(rep.getDirectory().getParent(), "secondfile");
+//    myfile.createNewFile();
+//    git.add().addFilepattern(".").call();
+
+
 }

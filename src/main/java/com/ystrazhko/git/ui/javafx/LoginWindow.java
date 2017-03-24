@@ -74,6 +74,11 @@ class LoginWindow {
 
             @Override
             public void handle(ActionEvent e) {
+                CredentialsProvider.setDefault(new UsernamePasswordCredentialsProvider("LyskaL", "2569_LyudA1"));
+                //JGit.getInstance().clone("https://github.com/LyskaL/JGit_test.git", "C:/Users/h185170/Documents/TestGit");
+
+                JGit.getInstance().commit("C:/Users/h185170/Documents/GitLab_Workspace/my-test-project", "Test commit");
+
                 actiontarget.setFill(Color.FIREBRICK);
                 String name = userTextField.getText();
                 String password = pwBox.getText();
@@ -86,12 +91,6 @@ class LoginWindow {
                     String jsonGroup = (String) ((GroupsUserService) ServiceProvider.getInstance().getService
                             (GroupsUserService.class.getName())).getGroups(jsonUser.toString());
                     Collection<Group> groups = JSONParser.parseToCollectionObjects(jsonGroup, new TypeToken<List<Group>>(){}.getType());
-
-                    if(JGit.getInstance().clone((Group) groups.toArray()[0], "C:/Users/h185170/Documents/GitLab_Workspace")) {
-                        System.out.println("SUCCESSFULLY");
-                    } else {
-                        System.err.println("VERY BAD! :(");
-                    }
 
                 } catch (HTTPException httpException) {
                     System.err.println("!ERROR: " + httpException.getMessage());
