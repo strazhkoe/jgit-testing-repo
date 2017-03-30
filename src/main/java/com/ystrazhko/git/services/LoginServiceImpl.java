@@ -2,11 +2,12 @@ package com.ystrazhko.git.services;
 
 import java.util.HashMap;
 
+import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
+
 import com.ystrazhko.git.connections.RESTConnector;
 import com.ystrazhko.git.entities.User;
 import com.ystrazhko.git.util.JSONParser;
-import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 public class LoginServiceImpl implements LoginService {
 

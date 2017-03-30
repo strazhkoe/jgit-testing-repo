@@ -3,6 +3,7 @@ package com.ystrazhko.git.ui.javafx;
 import com.ystrazhko.git.services.LoginService;
 import com.ystrazhko.git.services.ServiceProvider;
 import com.ystrazhko.git.ui.UserInterface;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +20,7 @@ public class JavaFXUI extends Application implements UserInterface {
         launch(args);
     }
 
-    private LoginService _loginService =
+    private final LoginService _loginService =
             (LoginService) ServiceProvider.getInstance().getService(LoginService.class.getName());
 
     @Override
